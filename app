@@ -5,7 +5,8 @@ import os
 # Fetching the API key from environment variables
 api = os.getenv("MAKERSUITE_API_TOKEN")
 if not api:
-    raise ValueError("MAKERSUITE_API_TOKEN is not set in environment variables.")
+    print("Error: MAKERSUITE_API_TOKEN is not set.")
+    exit(1)
 
 # Configure the API key for Google Generative AI
 palm.configure(api_key=api)
