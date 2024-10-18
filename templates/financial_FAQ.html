@@ -1,14 +1,10 @@
-<head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
-</head>
-
-<body>
-<div class="container">
-<h2>Welcome to Financial FAQ</h2>
-<form action="/makersuite" method="post">
-    <input type="text" name="q">
-    <input type="submit" value="Enter">
-</form>
+<!-- Financial FAQ Section -->
+<div class="container" id="financialFAQ">
+    <h2>Financial FAQ</h2>
+    <form action="/makersuite" method="post">
+        <input type="text" name="q" placeholder="Ask a financial question...">
+        <input type="submit" value="Submit">
+    </form>
+    <h4>{{ r }}</h4>
+    <button onclick="location.href='#home'">Back to Home</button>
 </div>
-</body>
