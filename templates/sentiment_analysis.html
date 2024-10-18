@@ -1,14 +1,7 @@
-<head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
-</head>
-
-<body>
-<div class="container">
-<h2>Sentiment Analysis : Please enter your text : </h2>
-<form action="/sentiment_analysis_result" method="post">
-    <input type="text" name="q">
-    <input type="submit" value="Enter">
-</form>
+<div id="sentiment_analysis_section" style="display:none; padding: 20px; border: 1px solid #ccc; border-radius: 5px; margin-top: 20px;">
+    <h2 style="color: #333;">Sentiment Analysis: Please enter your text:</h2>
+    <form action="/sentiment_analysis_result" method="post">
+        <input type="text" name="q" style="width: 75%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
+        <input type="submit" value="Analyze" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    </form>
 </div>
-</body>
