@@ -1,18 +1,12 @@
 from flask import Flask, render_template, request
-import google.generativeai as palm  # Ensure this is a valid import
-import os
+import requests
 from textblob import TextBlob
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="/Users/joelaiweithai/Downloads/BC3411/templates")
 
-# Fetching the API key from environment variables
-api = os.getenv("MAKERSUITE_API_TOKEN")
-if not api:
-    raise ValueError("MAKERSUITE_API_TOKEN is not set in environment variables.")
-
-# Configure the API key for Google Generative AI
-palm.configure(api_key=api)
-model = {"model": "models/chat-bison-001"}
+api_key = "AIzaSyD8ocNijPFuNfaae5VDChD9jG2cXd12G50"
+model_id = "gemini-1.5-flash-latest"
+url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={api_key}"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -25,23 +19,39 @@ def financial_FAQ():
 @app.route("/makersuite", methods=["GET", "POST"])
 def makersuite():
     q = request.form.get("q")
-    r = palm.chat(messages=q, **model)
-    return render_template("makersuite.html", r=r.last)
-
-@app.route("/sentiment_analysis", methods=["GET", "POST"])
-def sentiment_analysis():
-    return render_template("sentiment_analysis.html")
+    headers = {
+        "Content-Type": "application/json"
+    }
+    data = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": q}
+                ]
+            }
+        ]
+    }
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        generated_response = response.json()['candidates'][0]['content']['parts'][0]['text']
+        sentiment = TextBlob(q).sentiment
+    except Exception as e:
+        generated_response = f"An error occurred: {str(e)}"
+        sentiment = None
+    
+    return render_template("makersuite.html", response=generated_response, sentiment=sentiment)
 
 @app.route("/transfer_money", methods=["GET", "POST"])
 def transfer_money():
+    if request.method == "POST":
+        # You would handle the money transfer logic here
+        amount = request.form.get("amount")
+        to_account = request.form.get("to_account")
+        # Fake transfer success for the example
+        transfer_status = f"Successfully transferred ${amount} to account {to_account}."
+        return render_template("transfer_result.html", status=transfer_status)
     return render_template("transfer_money.html")
 
-@app.route("/sentiment_analysis_result", methods=["GET", "POST"])
-def sentiment_analysis_result():
-    text = request.form.get("q")
-    sentiment_result = TextBlob(text).sentiment
-    return render_template("sentiment_analysis_result.html", sentiment=sentiment_result)
-
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run()
