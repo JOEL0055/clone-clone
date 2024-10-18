@@ -2,11 +2,11 @@ from flask import Flask, render_template, request
 import requests
 from textblob import TextBlob
 
-app = Flask(__name__, template_folder="/Users/joelaiweithai/Downloads/BC3411/templates")
+api = os.getenv("MAKERSUITE")
+genai.configure(api_key=api)
+model = genai.GenerativeModel("gemini-1.5-flash")
 
-api_key = "AIzaSyD8ocNijPFuNfaae5VDChD9jG2cXd12G50"
-model_id = "gemini-1.5-flash-latest"
-url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent?key={api_key}"
+app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
