@@ -1,28 +1,41 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask,render_template,request
+import google.generativeai as genai
+import textblob
+import os
+
+api = os.getenv("MAKERSUITE")
+genai.configure(api_key=api)
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/",methods=["GET","POST"])
 def index():
-    return render_template("templates.html")
+    return(render_template("index.html"))
 
-@app.route("/sentiment_analysis", methods=["POST"])
+@app.route("/financial_FAQ",methods=["GET","POST"])
+def financial_FAQ():
+    return(render_template("financial_FAQ.html"))
+
+@app.route("/makersuite",methods=["GET","POST"])
+def makersuite():
+    q = request.form.get("q")
+    r = model.generate_content(q)
+    return(render_template("makersuite.html",r=r.text))
+
+@app.route("/sentiment_analysis",methods=["GET","POST"])
 def sentiment_analysis():
-    # Assuming you process and redirect or you can use AJAX to stay on the page
-    text = request.form['text']
-    sentiment_result = analyze_sentiment(text)
-    return render_template("index.html", r=sentiment_result)
+    return(render_template("sentiment_analysis.html"))
 
-@app.route("/transfer_money", methods=["POST"])
+@app.route("/transfer_money",methods=["GET","POST"])
 def transfer_money():
-    # Process and show results
-    return render_template("index.html")
+    return(render_template("transfer_money.html"))
 
-@app.route("/financial_FAQ", methods=["POST"])
-def financial_faq():
-    # Show FAQs or redirect
-    return render_template("index.html")
+@app.route("/sentiment_analysis_result",methods=["GET","POST"])
+def sentiment_analysis_result():
+    q = request.form.get("q")
+    r=textblob.TextBlob(q).sentiment
+    return(render_template("sentiment_analysis_result.html",r=r))
 
 if __name__ == "__main__":
-    app.run(debug=True)
-
+    app.run()
