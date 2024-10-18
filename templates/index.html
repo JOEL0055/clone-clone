@@ -1,19 +1,7 @@
-<head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
-</head>
-
-<body>
-<div class="container">
-<h2>Welcome to Lama Robo Advisor</h2>
-<form action="/sentiment_analysis" method="post">
-    <input type="submit" value="Sentiment Analysis">
-</form>
-<form action="/transfer_money" method="post">
-    <input type="submit" value="Transfer Money">
-</form>
-<form action="/financial_FAQ" method="post">
-    <input type="submit" value="Financial FAQ">
-</form>
+<!-- Home Section -->
+<div class="container" id="home">
+    <h2>Welcome to Lama Robo Advisor</h2>
+    <button onclick="location.href='#sentimentAnalysis'">Sentiment Analysis</button>
+    <button onclick="location.href='#transferMoney'">Transfer Money</button>
+    <button onclick="location.href='#financialFAQ'">Financial FAQ</button>
 </div>
-</body>
