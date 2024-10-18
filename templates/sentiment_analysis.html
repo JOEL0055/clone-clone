@@ -1,7 +1,66 @@
-<div id="sentiment_analysis_section" style="display:none; padding: 20px; border: 1px solid #ccc; border-radius: 5px; margin-top: 20px;">
-    <h2 style="color: #333;">Sentiment Analysis: Please enter your text:</h2>
-    <form action="/sentiment_analysis_result" method="post">
-        <input type="text" name="q" style="width: 75%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
-        <input type="submit" value="Analyze" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-    </form>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: white;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        input[type="text"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #007B9E;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sentiment Analysis</h2>
+        <p>Please enter your text below:</p>
+        <form action="/sentiment_analysis_result" method="post">
+            <input type="text" name="q" placeholder="Type your text here..." required>
+            <input type="submit" value="Analyze">
+        </form>
+        <button onclick="location.href='/'">Back to Home</button>
+    </div>
+</body>
+</html>
