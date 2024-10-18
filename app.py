@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    return render_template("templates.html")
 
 @app.route("/sentiment_analysis", methods=["POST"])
 def sentiment_analysis():
