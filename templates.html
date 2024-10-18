@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Lama Robo Advisor</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Lama Robo Advisor</h2>
+
+        <!-- Main Menu -->
+        <form action="/sentiment_analysis" method="post">
+            <input type="submit" value="Sentiment Analysis">
+        </form>
+        <form action="/transfer_money" method="post">
+            <input type="submit" value="Transfer Money">
+        </form>
+        <form action="/financial_FAQ" method="post">
+            <input type="submit" value="Financial FAQ">
+        </form>
+
+        <!-- Sentiment Analysis Section -->
+        <div id="sentiment_analysis_section" style="display:none;">
+            <h2>Sentiment Analysis: Please enter your text:</h2>
+            <form action="/sentiment_analysis_result" method="post">
+                <input type="text" name="q">
+                <input type="submit" value="Analyze">
+            </form>
+        </div>
+
+        <!-- Transfer Money Section -->
+        <div id="transfer_money_section" style="display:none;">
+            <h2>Transfer Money</h2>
+            <input type="text" id="payer" placeholder="Enter Payer Address">
+            <input type="text" id="payee" placeholder="Enter Payee Address">
+            <input type="number" id="amount" placeholder="Enter Amount to Transfer">
+            <button class="btn" onclick="transfer()">Transfer</button>
+            <button class="btn" onclick="transaction()">View Transaction</button>
+            <p id="view_payer"></p>
+            <p id="view_payee"></p>
+            <p id="view_amount"></p>
+        </div>
+
+        <!-- Financial FAQ Section -->
+        <div id="financial_FAQ_section" style="display:none;">
+            <h2>Financial FAQs</h2>
+            <!-- Content loaded dynamically -->
+        </div>
+        
+        <!-- Result Section -->
+        <div id="result_section" style="display:none;">
+            <h2>Reply:</h2>
+            <h4>{{ r }}</h4>
+        </div>
+
+        <!-- Main Menu Button -->
+        <form action="/" method="post">
+            <input type="submit" value="Main">
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script> <!-- Assuming you move JavaScript to an external file -->
+</body>
+</html>
